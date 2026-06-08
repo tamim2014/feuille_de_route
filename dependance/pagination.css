@@ -125,4 +125,119 @@ body {
   background-color: rgba(120, 130, 255, 0.08);
 }
 
+/*
+ * Garge-Les-Gonesse
+ * 08.06.2026
+ *
+ * infobulle(toolpip): Sur le dernier bouton(&raquo;)
+ *
+ */
+ 
+   /* 🟦 Popup container - can be anything you want */
+	.popup-bottom,
+	.popup {
+	  position: relative;
+	  display: inline-block;
+	  cursor: pointer;
+	  -webkit-user-select: none;
+	  -moz-user-select: none;
+	  -ms-user-select: none;
+	  user-select: none;
+	}
+
+	/* 🟦 The actual popup */
+	.popup-bottom .popuptext,
+	.popup .popuptext {
+	  visibility: hidden;
+	  width: 160px;
+	  background-color: white; /* #555; */
+	  color: black; /* #fff;  */
+	  text-align: center;
+	  border-radius: 6px;
+	  padding: 8px 0;
+	  position: absolute;
+	  z-index: 1;
+	  bottom: 125%;
+	  left: 50%;
+	  margin-left: -80px;
+	}
+
+
+	/* 🟦 Popup arrow */
+	.popup .popuptext::after {
+	  content: "";
+	  position: absolute;
+	  top: 100%;
+	  left: 50%;
+	  margin-left: -5px;
+	  border-width: 5px;
+	  border-style: solid;
+	  /* border-color: #555 transparent transparent transparent; */
+	  border-color: white transparent transparent transparent;
+	}
+
+	/* 🟦 Toggle this class - hide and show the popup */
+	.popup .show {
+	  visibility: visible;
+	  -webkit-animation: fadeIn 1s;
+	  animation: fadeIn 1s;
+	}
+
+	/* 🟦 Add animation (fade in the popup) */
+	@-webkit-keyframes fadeIn {
+	  from {opacity: 0;} 
+	  to {opacity: 1;}
+	}
+
+	@keyframes fadeIn {
+	  from {opacity: 0;}
+	  to {opacity:1 ;}
+	}
+	
+	
+/* Tooltip EN-DESSOUS: Alternance */
+
+.popup-bottom .popuptext {
+  top: 125%;        /* On place en dessous */
+  bottom: auto;     /* On neutralise le bottom hérité */
+  left: 50%;
+  margin-left: -80px;
+}
+
+/* Flèche vers le haut */
+.popup-bottom .popuptext::after {
+  content: "";
+  position: absolute;
+  bottom: 100%;     /* Flèche au-dessus du tooltip */
+  top: auto;        /* On neutralise le top hérité */
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent white transparent;
+}
+
+/* 
+ * Sustitus
+ * Affichage du toolpip(infobulle) au survol des btn
+ * 
+ */	
+.popuptext {
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.popup:hover .popuptext {
+  visibility: visible;
+  opacity: 1;
+}
+/* Pour celui du bas: Alternance */
+.popup-bottom:hover .popuptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+
+
 	

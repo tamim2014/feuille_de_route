@@ -42,4 +42,17 @@ function toggleNotes() {
     document.getElementById("notes").classList.toggle("open");
 }
 
-	
+// ===========================================================
+//  infobulle(toolpip): Sur le dernier bouton(&raquo;)
+// ===========================================================
+
+// When the user "survol" on btn(&raquo;), open the toolpip
+
+/* On la remplace par du css
+
+function infobulle() {
+  var popup = document.getElementById("myPopup");
+  popup.classList.toggle("show");
+}	
+
+*/

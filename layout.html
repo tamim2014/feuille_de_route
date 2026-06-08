@@ -121,6 +121,7 @@
 			</div>
         </div>
 		
+		
 		<div class="task">
             <input type="checkbox" id="t16">
             <label for="t16">1.6 — Je veux disposer mon footer en 3 colonne(sans faire de tableau)</label>
@@ -290,9 +291,18 @@
 		  <section class="containerPagination"  > 
 			<nav class="pagination"  >
 			  <a class="prev">&laquo;</a>
-			  <a   href="index.html"     class="btn">1</a>
-			  <a   href="secusymfony.html"   class="btn">2</a> 
-			  <a   href="#"      class="btn activer">3</a>
+			  <a   href="index.html"  class="btn popup">
+			      1
+				  <span class="popuptext">Sécurité procedurale !</span>
+			  </a>
+			  <a   href="secusymfony.html"   class="btn popup-bottom">
+			       2
+				   <span class="popuptext">Sécurité symfony !</span>
+			  </a> 
+			  <a   href="#"  class="btn popup activer">
+			      3
+				  <span class="popuptext">Logique layout !</span>
+			  </a>
 			  <a   onclick="filterSelection('ibnHayyan')"   class="btn">4</a>
 			  <a   onclick="filterSelection('Zamakhchari')" class="btn">5</a>
 			  <a class="next">&raquo;</a>
@@ -305,18 +315,16 @@
 			  <a    onclick="filterSelection('baydawi')"   class="btn">4</a>
 			  <a    onclick="filterSelection('zawawi')"    class="btn" >5</a>
 			  <!-- <a    onclick="filterSelection('zawawi')"    class="btn activer" style="display:none;">5</a>  Pourquoi je fais ça? car class "activer" doit être intialement présent sur un bouton pour pour se propager sur les autres bouton suivant le clic utilisateur. Je met un "display:none" car je ne veux pas voir de btn enfoncé  tant que l'utilisateur ne l'a pas touché.( un peu long ce p'tit bavardage mé cpa grav)  -->
-			  <a  class="next btn" onclick="toggleNotes()">&raquo;</a>
+			  <a  class="next btn popup" onclick="toggleNotes();">
+			       &raquo;
+				   <span class="popuptext" id="myPopup">Notes de bas de page !</span>
+			  </a>
 			</nav>
-		  </section>
+		  </section> 
 	</div>		
 	<!--  fin PAGINATION  -->
 </main>
-<!--
-   <h4>Le combo de reference:</h4>
-   <p>Liste des prorietés:<code>MDN Web Docs(developer.mozilla.org)</code></p>
-   <p>Tests des prorietés:<code>www.w3schools.com/cssref/</code></p>
 
--->
 
 <div id="notes" class="footer-notes"> <!--  Repliable (comme un panneau d’admin)    -->
 	<div class="conteneur-reponses"></div> <!-- séparateur -->
