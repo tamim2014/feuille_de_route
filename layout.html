@@ -299,7 +299,7 @@
 			       2
 				   <span class="popuptext">Sécurité symfony !</span>
 			  </a> 
-			  <a   href="#"  class="btn popup activer">
+			  <a   href="#"  class="btn popup activer default-btn">
 			      3
 				  <span class="popuptext">Logique layout !</span>
 			  </a>
@@ -315,9 +315,9 @@
 			  <a    onclick="filterSelection('baydawi')"   class="btn">4</a>
 			  <a    onclick="filterSelection('zawawi')"    class="btn" >5</a>
 			  <!-- <a    onclick="filterSelection('zawawi')"    class="btn activer" style="display:none;">5</a>  Pourquoi je fais ça? car class "activer" doit être intialement présent sur un bouton pour pour se propager sur les autres bouton suivant le clic utilisateur. Je met un "display:none" car je ne veux pas voir de btn enfoncé  tant que l'utilisateur ne l'a pas touché.( un peu long ce p'tit bavardage mé cpa grav)  -->
-			  <a  class="next btn popup" onclick="toggleNotes();">
-			       &raquo;
-				   <span class="popuptext" id="myPopup">Notes de bas de page !</span>
+			  <a id="btnNotes" class="next btn popup toggle-btn" onclick="toggleNotes();">
+					&raquo;
+					<span class="popuptext" id="myPopup">Notes de bas de page !</span>
 			  </a>
 			</nav>
 		  </section> 
