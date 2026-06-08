@@ -102,3 +102,34 @@
                 padding: 15px;
             }
         }
+		
+/* ####################################################################################### */		
+	  /* logo */
+	  .logo-emoji {
+		  font-size: 17px;      /* 32px; adapte à la taille de ton ancien logo */
+		  display: inline-block;
+		  line-height: 1;
+		  padding-bottom:.3em;
+	  }
+	  @media (max-width: 786px) {
+		  .logo-emoji {
+			font-size: 12px;
+		  }
+	  }
+	  /* Break point suplémentaire: Mobiles compacts */
+	  @media (max-width: 480px) {
+		  .logo-emoji {
+			font-size: 12px;
+		  }
+	 }
+	 /* Une petite animation au survol */
+	 
+	 .logo-emoji {
+		 display: inline-block;
+		vertical-align: middle;
+		transition: transform 0.25s ease;
+	 }
+
+	.logo-emoji:hover {
+		transform: scale(1.15);
+	}
