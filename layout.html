@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Logique layout</title><!-- Mardi 02.06.26  -->
+	<link rel="stylesheet" href="dependance/prism.css" media="screen" />
+    <link rel="stylesheet" href="dependance/dark.css" >
+    <link rel="stylesheet" href="dependance/pagination.css" >
+    <link rel="stylesheet" href="dependance/footer.css" ><!-- footer ndreda -->	
+	<link rel="stylesheet" href="dependance/flexfooter.css" >
+	
+	<script src="dependance/prism.js" type="text/javascript" ></script>
+	<script src="dependance/pagination.js" defer type="text/javascript" ></script>
+</head>
+
+<body>
+<header> 
+	
+	<div class="content-footer"> 
+         	
+		 <div class="ndreda-footer" style="padding:0;" >  
+			<!-- animation du footer -->
+			<div style="position: relative; top:0; right:auto; width:auto;">		
+				<div class="wrapper" style=" ">
+					<div class="obj"></div>
+					<div class="obj"></div>
+				</div>
+				
+			</div>	
+			<!-- contenu du footer -->
+			<div id="ndreda-footerG" style="width:100%;" >
+			    <h1>🛡️ Logique layout </h1>
+			</div>
+		</div>		
+		 <small class="copyright_"><span style="color:gray;">2026 &copy; -</span> <i style="color:#555">Garges Les Gonesse</i></small> 
+		 <img src="img/coran..png"    class="marfa3"/>
+	</div>	  
+</header>
+
+
+<div class="conteneur-reponses separateur1"></div> <!-- séparateur -->
+<main class="contenu">
+<!-- <h1>🛡️ Feuille de Route Sécurité — Lundi 25.05.26</h1>  -->
+
+<!-- SECTION 1 -->
+<div class="section">
+    <div class="accordion-title">🧱 1) Flexbox</div>
+    <div class="accordion-content">
+
+        <h4>Objets: ... </h4>
+        <div class="task">
+            <input type="checkbox" id="t11">
+            <label for="t11">1.1 — Mon footer remonte</label>
+			<div class="script">
+				<pre><code class="language-css">
+                      /* 11111111111111111111111111111 */
+			    </code></pre>
+			</div>
+        </div>
+
+        <div class="task">
+            <input type="checkbox" id="t12">
+            <label for="t12">1.2 — Ma table vire à gauche ( sur android )</label>
+			<div class="script">
+				<pre><code class="language-css">
+				       /* 
+						* ✔️ flex-direction: Dirige l'axe principale(row/column) 
+						* 
+						*  C'est qu'elle se dirige vers le bas
+						*  Appliquer une "direction horizontale"
+						*
+						*/
+						.tabledroite{
+						   flex-direction: row;
+						}
+
+			    </code></pre>
+			</div>
+        </div>
+
+        <div class="task">
+            <input type="checkbox" id="t13">
+            <label for="t13">1.3 — La moitié bas est vide (sur grand ecran)</label>
+			<div class="script">
+				<pre><code class="language-css">
+						/* ✔️ align-items:strech; ( à tester sur le parent) */
+
+			    </code></pre>
+			</div>
+        </div>
+
+        <div class="task">
+            <input type="checkbox" id="t14">
+            <label for="t14">1.4 — La moitié droite est vide (sur grand ecran)</label>
+			<div class="script">
+				<pre><code class="language-css">
+				       /* ✔️ align-items:strech; ( à tester sur le parent)    */
+					   
+			    </code></pre>
+			</div>
+        </div>
+
+        <div class="task">
+            <input type="checkbox" id="t15">
+            <label for="t15">1.5 — Ma div(enfant) refuse de descendre</label>
+			<div class="script">
+				<pre><code class="language-css">
+						/* ✔️ Voir dark.css: lignes61 et 68 */
+						
+						 /* 📌 Ouvrir la possibilité d'aller à la ligne - contrairement à nowrap */
+						 .parent {
+								display: flex;
+								flex-wrap:wrap; 
+						  }
+						  
+						 /* 📌 Obliger d'aller à la ligne */
+						  .enfant {
+								width:100%; 
+						   }
+				</code></pre>
+			</div>
+        </div>
+		
+		<div class="task">
+            <input type="checkbox" id="t16">
+            <label for="t16">1.6 — Je veux disposer mon footer en 3 colonne(sans faire de tableau)</label>
+			<div class="script">
+				<pre><code class="language-css">
+					   /* 
+						* ✔️  flex-direction:row;  Direction par défaut du flexbox 
+						* ✔️  align-items:strech;  Dirige l'axe secondaire(tire vers le bas)
+						*  
+						*/
+						
+						parent {
+							display:flex;        /* Aligne les 3 div horizontalement */
+							align-items:strech; /*  Tire chacune vers le bas sur toute la hauteur disponible */
+						}
+				</code></pre>
+			</div>
+        </div>
+		
+		<div class="task">
+            <input type="checkbox" id="t17">
+            <label for="t17">1.7 — Je veux que mes colonnes descendent jusqu'au footer(mais j'ai presque pas de contenu)</label>
+			<div class="script">
+				<pre><code class="language-css">
+						/* ✔️ align-items:strech; */
+						
+						parent {
+							display:flex;
+							align-items:strech;
+						}
+				</code></pre>
+			</div>
+        </div>
+
+    </div>
+</div>
+
+<!-- SECTION 2 -->
+<div class="section">
+    <div class="accordion-title">🧱 2) Grid</div>
+    <div class="accordion-content">
+
+        <h4>Objets: ...</h4>
+
+        <div class="task">
+            <input type="checkbox" id="t21">
+            <label for="t21">2.1 — //////////////////////////////////</label>
+			<div class="script">
+				<pre><code class="language-css">
+					/* ✔️ Solution1 */
+                     ////////////////////////
+				</code></pre>
+			</div>
+        </div>
+
+        <div class="task">
+            <input type="checkbox" id="t22">
+            <label for="t22">2.2 — |||||||||||||||||||||||||||||-</label>
+			<div class="script">
+				<pre><code class="language-css">
+					/* ✔️ Solution1 */
+					
+                    |||||||||||||||||||||||||||-
+
+
+					   
+				</code></pre>
+			</div>
+        </div>
+
+        <div class="task">
+            <input type="checkbox" id="t23">
+            <label for="t23">2.3 — Probleme3</label>
+			<div class="script">
+				<pre><code class="language-css">
+						/* ✔️ Solution3 */
+
+                         2.3
+					   
+				</code></pre>
+			</div>
+        </div>
+
+        <div class="task">
+            <input type="checkbox" id="t24">
+            <label for="t24">2.4 — Probleme4</label>
+			<div class="script">
+				<pre><code class="language-css">
+						/* ✔️ Solution1 */
+
+                        2.4
+					   
+				</code></pre>
+			</div>
+        </div>
+
+    </div>
+</div>
+
+<!-- SECTION 3 -->
+<div class="section">
+    <div class="accordion-title">🧱 3) Alternatives à l'olive pâle(#e5eecc)</div>
+    <div class="accordion-content">
+
+        <h4>Objets: Pannel de commande - slide.css(lignes4,111,243,255)</h4>
+
+        <div class="task">
+            <input type="checkbox" id="t31">
+            <label for="t31">Choix1 — Gris vert - très leger derivé du teal(#E3EBEA) </label>
+			<div class="script">
+                  <img src="dependance/img/gris-vert.png">
+			</div>
+        </div>
+
+        <div class="task">
+            <input type="checkbox" id="t32">
+            <label for="t32">Choix2 — Gris verdatre(#E6EAE5) ⚠️</label>
+			<div class="script">
+                  <img src="dependance/img/gris-verdatre.png">
+			</div>
+        </div>
+		
+		<div class="task">
+            <input type="checkbox" id="t33">
+            <label for="t33">Choix3 — Gris beige doux(#E8E4D8)</label>
+			<div class="script">
+                  <img src="dependance/img/gris-beige.png">
+			</div>
+        </div>
+		
+		
+		<div class="task">
+            <input type="checkbox" id="t34">
+            <label for="t34">Choix5 — Inverser l'existant: Ivoire végétal(#e9eddc)/bouton:hover Olive pâle(#e5eecc)</label>
+			<div class="script">
+			<div class="script">
+                  <img src="dependance/img/olive2.png">
+			</div>
+			</div>
+        </div>
+		
+		<div class="task">
+            <input type="checkbox" id="t35">
+            <label for="t35">Choix5 — Conserver l'existant: Olive pâle(#e5eecc)/Bouton:hover Ivoire végétal(#e9eddc)</label>
+			<div class="script">
+			<div class="script">
+                  <img src="dependance/img/olive.png">
+			</div>
+			</div>
+        </div>
+
+		<div class="task">
+            <input type="checkbox" id="t36">
+            <label for="t36">Choix6 — Exagerer l'existant: #eff; ❌</label>
+			<div class="script">
+			<div class="script">
+                  <img src="dependance/img/eff.png">
+			</div>
+			</div>
+        </div>
+		
+	</div>
+</div>
+
+    <!--  PAGINATION  -->
+	<div class="tabcontent" id="tabcontent" style=" margin-top:3em; margin-bottom:0; " >
+		  <section class="containerPagination"  > 
+			<nav class="pagination"  >
+			  <a class="prev">&laquo;</a>
+			  <a   href="index.html"     class="btn">1</a>
+			  <a   href="secusymfony.html"   class="btn">2</a> 
+			  <a   href="#"      class="btn activer">3</a>
+			  <a   onclick="filterSelection('ibnHayyan')"   class="btn">4</a>
+			  <a   onclick="filterSelection('Zamakhchari')" class="btn">5</a>
+			  <a class="next">&raquo;</a>
+			</nav>
+			<nav class="pagination pagination-blue">
+			  <a class="prev">&laquo;</a>
+			  <a    onclick="filterSelection('ibnAtiyya')" class="btn" >1</a>
+			  <a    onclick="filterSelection('ar-Râzî')"   class="btn" >2</a>
+			  <a    onclick="filterSelection('qurtubi')"   class="btn" >3</a>
+			  <a    onclick="filterSelection('baydawi')"   class="btn">4</a>
+			  <a    onclick="filterSelection('zawawi')"    class="btn" >5</a>
+			  <!-- <a    onclick="filterSelection('zawawi')"    class="btn activer" style="display:none;">5</a>  Pourquoi je fais ça? car class "activer" doit être intialement présent sur un bouton pour pour se propager sur les autres bouton suivant le clic utilisateur. Je met un "display:none" car je ne veux pas voir de btn enfoncé  tant que l'utilisateur ne l'a pas touché.( un peu long ce p'tit bavardage mé cpa grav)  -->
+			  <a  class="next btn" onclick="toggleNotes()">&raquo;</a>
+			</nav>
+		  </section>
+	</div>		
+	<!--  fin PAGINATION  -->
+</main>
+<!--
+   <h4>Le combo de reference:</h4>
+   <p>Liste des prorietés:<code>MDN Web Docs(developer.mozilla.org)</code></p>
+   <p>Tests des prorietés:<code>www.w3schools.com/cssref/</code></p>
+
+-->
+
+<div id="notes" class="footer-notes"> <!--  Repliable (comme un panneau d’admin)    -->
+	<div class="conteneur-reponses"></div> <!-- séparateur -->
+	<footer style="height:auto; padding:0;" >     
+		<h3>
+		  Blablabla Blablabla  Blablabla Blablabla   Blablabla Blablabla  
+		</h3>	
+		<div class="flexfooter">
+			<div>
+				   <h4>⭐ 1)Le combo de reference:</h4>
+
+				   <p>  
+					<b style="color:gold">✔ Liste des prorietés:</b><BR>
+					→ <code>MDN Web Docs(developer.mozilla.org)</code><BR>
+					→ <code> |||||||||||||||||||||||||||||||</code><BR>
+				   </p>
+				   <p>  
+					<b style="color:gold">✔ Tests des prorietés:</b><BR> 
+					→ <code>www.w3schools.com/cssref/</code><BR>
+					→ <code> |||||||||||||||||||||||||||||||</code><BR>
+				   </p>
+					Donc :
+				   <P>
+					 👉 ///////////////////////////////////////////////////<BR>  
+					 👉 /////////////////////////////////////////////////.
+				   </p>
+						/////////////////////////////////////////// <BR>
+						 ////////////////////////////////////////<BR>
+				   <P>
+					   ✅ \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ <br>
+					   ✅ \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+				   </p>
+			</div>
+			<div>
+				   <h4>⭐ 1) Pourquoi tout reste vertical même sans align-items ?</h4>
+					Parce que tu confonds deux axes :
+				   <p>  
+					<b style="color:gold">✔ flex-direction</b>(Axe principal)<BR>
+					→ row = horizontal<BR>
+					→ column = vertical<BR>
+				   </p>
+				   <p>  
+					<b style="color:gold">✔ align-items</b>(axe secondaire)<BR> 
+					→ stretch = étire verticalement (si row)<BR>
+					→ stretch = étire horizontalement (si column)<BR>
+				   </p>
+					Donc :
+				   <P>
+					 👉 align-items ne décide PAS si les éléments sont en colonne ou en ligne.<BR>  
+					 👉 C’est flex-direction qui décide.
+				   </p>
+						Et toi, tu n’as PAS mis flex-direction: column. <BR>
+						 Donc Flexbox utilise sa valeur par défaut :<BR>
+				   <P>
+					   ✅ flex-direction: row (axe principal)<br>
+					   ✅ align-items: stretch  étire verticalement (l’axe secondaire)
+				   </p>
+			</div>
+			<div>
+			      <h4>⭐ 1) Question ?</h4>
+				  33333333333333333333333333333333333
+				  33333333333333333333333333333333333
+				  33333333333333333333333333333333333
+				  3333333333333
+				  <p>
+				  33333333333333333333333333333333333
+				  33333333333333333333333333333333333
+				  3333333333333333333  3333333333333
+				  33333333333333333333333333333333333
+				  333333333 333333333333333333333333
+				  33333333333333333333333333333333333
+				  </p>
+				  33333333333333333333333333333333333
+				  3333333333
+			</div>
+		</div>
+		
+		<div class="content-footer" style="margin-top:0;">         
+			<div class="ndreda-footer"> 		  
+				<ul type="square">
+					<li>Le client envoie des requêtes </li>
+					<li>Le serveur attend les requêtes des clients et y répond. </li>
+					
+				</ul>
+			</div>		
+			<span class="copyright_"><span style="color:gray;">2019 &copy; -</span> Master Handi</span>
+		</div>	  
+	</footer>
+</div>
+
+<script>
+    const PAGE_PREFIX = "layout_"; 
+</script>
+<script src="dependance/checklist.js"></script>
+
+</body>
+</html>

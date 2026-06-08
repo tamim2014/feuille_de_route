@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Feuille de Route Sécurité</title>
+	<link rel="stylesheet" href="dependance/prism.css" media="screen" />
+
+    <style>
+        /* ------------------------------
+           DARK MODE AUTOMATIQUE
+        ------------------------------ */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+            background: #121212;
+            color: #e5e5e5;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .section {
+            background: #1e1e1e;
+            padding: 20px;
+            margin-bottom: 25px;
+            border-radius: 8px;
+            border-left: 6px solid #0078D7;
+        }
+
+        .accordion-title {
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 10px 0;
+        }
+
+        .accordion-content {
+            display: none;
+            margin-top: 10px;
+        }
+
+        .task {
+            display: flex;
+            align-items: center;
+            margin: 8px 0;
+			/* Mettre le .script en bas */
+			flex-wrap:wrap; /* 📌 Possibilité d'aller à la ligne - contrairement à nowrap*/
+        }		
+        .task input {
+            margin-right: 10px;
+            transform: scale(1.3);
+        }
+		.task .script {
+            width:100%; /*  📌 Obligé d'aller à la ligne */
+			margin:1em auto 2em  0; 
+			padding:0;
+			box-shadow:
+				0px 2px 2px 0px rgba(0, 0, 0, 0.5) inset,
+				0px 2px 2px 0px rgba(255, 255, 255, 0.5);
+			border:none; /* border:1px solid #8c8b8b; */ 
+			border-radius: 7px; 	
+            background:#555;
+		}
+		pre{
+		 /* Pourquoi !important? à cause de prisme qui l'a prédefini */
+		  margin:0 !important; 
+		  border-radius:40px !important; /* 50px */
+		}
+
+		
+		
+		
+
+        /* ------------------------------
+           RESPONSIVE
+        ------------------------------ */
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            .section {
+                padding: 15px;
+            }
+        }
+
+    </style>
+	<script src="dependance/prism.js" type="text/javascript" ></script>
+</head>
+
+<body>
+
+<h1>🛡️ Feuille de Route Sécurité — Lundi 25.05.26</h1>
+
+<!-- SECTION 1 -->
+<div class="section">
+    <div class="accordion-title">🧱 1) Sécurisation de l’authentification</div>
+    <div class="accordion-content">
+
+        <h4>Objets: Empêcher l’accès direct par URL et le contournement du login.</h4>
+        <div class="task">
+            <input type="checkbox" id="t11">
+            <label for="t11">1.1 — backend/url_access_guard.php</label>
+			<div class="script">
+				<pre><code class="language-php">
+						session_start();
+						if (!isset($_SESSION['user_id'])) {
+							header("Location: login.php"); // ✔️index.php et non ❌login.php
+							exit();
+						}
+			    </code></pre>
+			</div>
+        </div>
+
+        <div class="task">
+            <input type="checkbox" id="t12">
+            <label for="t12">1.2 — Protection backend (officiers non admin)</label>
+			<div class="script">
+				<pre><code class="language-php">
+				        // ✔️ modifier_.php &  ✔️ supprimer.php
+						
+						if ($_SESSION["user_role"] !== "admin") {
+							exit("Accès refusé.");
+						}
+			    </code></pre>
+			</div>
+        </div>
+
+        <div class="task">
+            <input type="checkbox" id="t13">
+            <label for="t13">1.3 — backend/logout.php (détruire la session)</label>
+			<div class="script">
+				<pre><code class="language-php">
+						session_start();
+						session_unset();
+						session_destroy();
+						
+						header("Location: login.php"); // ✔️index.php
+						exit();
+			    </code></pre>
+			</div>
+        </div>
+
+        <div class="task">
+            <input type="checkbox" id="t14">
+            <label for="t14">1.4 — Hachage des mots de passe</label>
+			<div class="script">
+				<pre><code class="language-php">
+				       $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+				
+				       //Et pour verifier
+				       password_verify($password, $hash);
+					   
+			    </code></pre>
+			</div>
+        </div>
+
+        <div class="task">
+            <input type="checkbox" id="t15">
+            <label for="t15">1.5 — Empêcher l’accès direct aux scripts AJAX</label>
+			<div class="script">
+				<pre><code class="language-php">
+						//Dans tes scripts backend :
+
+						session_start();
+						if (!isset($_SESSION['user_id'])) {
+							http_response_code(403);
+							exit("Accès interdit");
+						}
+					   
+				</code></pre>
+			</div>
+        </div>
+
+    </div>
+</div>
+
+<!-- SECTION 2 -->
+<div class="section">
+    <div class="accordion-title">🧱 2) Contrôle d’accès aux données</div>
+    <div class="accordion-content">
+
+        <h4>Objets:Gestion des droits (Rôles + Préfectures).</h4>
+
+        <div class="task">
+            <input type="checkbox" id="t21">
+            <label for="t21">2.1 — Ajouter un champ “préfecture” dans la table utilisateurs</label>
+        </div>
+
+        <div class="task">
+            <input type="checkbox" id="t22">
+            <label for="t22">2.2 — Stocker rôle + préfecture dans la session</label>
+        </div>
+
+        <div class="task">
+            <input type="checkbox" id="t23">
+            <label for="t23">2.3 — Filtrer les données selon la préfecture (lecture)</label>
+        </div>
+
+        <div class="task">
+            <input type="checkbox" id="t24">
+            <label for="t24">2.4 — Filtrer les données selon la préfecture (ajout/modification)</label>
+        </div>
+
+    </div>
+</div>
+
+<script>
+/* ---------------------------------------------------
+   ACCORDÉONS
+--------------------------------------------------- */
+document.querySelectorAll(".accordion-title").forEach(title => {
+    title.addEventListener("click", () => {
+        const content = title.nextElementSibling;
+        content.style.display = content.style.display === "block" ? "none" : "block";
+    });
+});
+
+/* ---------------------------------------------------
+   SAUVEGARDE AUTOMATIQUE DES CHECKBOXES
+--------------------------------------------------- */
+const checkboxes = document.querySelectorAll("input[type='checkbox']");
+
+checkboxes.forEach(cb => {
+    // Charger l'état sauvegardé
+    const saved = localStorage.getItem(cb.id);
+    if (saved === "true") cb.checked = true;
+
+    // Sauvegarder à chaque clic
+    cb.addEventListener("change", () => {
+        localStorage.setItem(cb.id, cb.checked);
+    });
+});
+</script>
+
+</body>
+</html>

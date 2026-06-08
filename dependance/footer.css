@@ -1,0 +1,118 @@
+        header .content-footer {
+		     padding-top:3%; 
+            /* background-image: linear-gradient(180deg, #555, #696969 40%, #000); */			 
+             background-image: linear-gradient(180deg, #333, #696969 40%, #000);			 
+		}
+		.conteneur-reponses.separateur1 {	
+			/* background-image: linear-gradient(180deg, black, #ddd 40%, #111);*/
+			background-image: linear-gradient(180deg, black, #aaa 40%, #111);
+		}
+
+
+		footer {     
+		  clear:both; /* forcer l’affichage sous le contenu */
+		  background: #555; text-align:center; color:white;
+		  height: 50px ; /* 222px; */
+		  padding:75px 0px 0px 0px;/* 100px 0px 0px 0px; */
+		  
+		  width:100% !important;
+		  margin:0 !important;
+		 
+		}
+		.content-footer {	
+			background-image: linear-gradient(180deg, #555, #696969 40%, #000);
+			padding-top:5px; /* padding-top:2%; */
+			float:left; 
+			width: 100%;
+		}
+
+		.ndreda-footer { 
+		  float: left; 
+		  margin-left: 6%;
+		  width:87%;
+		  height: 130px ;  
+		  padding:10px;
+		  margin-right: 15px;
+		  margin-bottom:30px;
+		  background-color:#555;   
+		  box-shadow:
+			0px 2px 2px 0px rgba(0, 0, 0, 0.5) inset,
+			0px 2px 2px 0px rgba(255, 255, 255, 0.5);
+		  border:1px solid #8c8b8b;
+		  border-radius: 10px;
+		  text-align:left ;
+		}
+
+		.copyright_ {
+			display:inline-block;
+			float:left; 
+			margin-left:6.2%;
+		}
+		#ndreda-footerG {display:inline; float:left;}
+		#ndreda-footerD {width:50%; margin:4.4% auto; }
+		/* precautions  pour les vieux navigateurs */ 
+		header , footer {display: block; } 
+		@media all and (max-width: 900px) {
+          footer {padding-top:2px;}	    	  
+		}
+		@media all and (max-width: 801px) and (min-width: 601px) {
+          footer {padding-top:2px;}		 
+		}
+		@media all and (max-width: 801px) and (min-width: 601px) {
+          footer {padding-top:2px;}		 
+		}
+		/*** Separateur: bord superieur du footer ***/
+		.conteneur-reponses {	
+			/* background-image: linear-gradient(180deg, #fff, #ddd 40%, #ccc); */
+			background-image: linear-gradient(180deg, black, #ddd 40%, #111);
+			padding-top:2%;
+		}
+		@media screen and (max-width: 460px) { 
+		   footer {font-size:.75em !important; }
+		   .conteneur-reponses , footer, .ndreda-footer {width:auto !important;}
+		   .ndreda-footer {height:auto !important; padding-left:0 !important;} 
+		   
+           #ndreda-footerG, #ndreda-footerD{display:block !important; float:left !important; }
+           #ndreda-footerD {width:auto; margin:auto 0 !important;   font-size:.9em; }		   
+		   
+		}
+		
+		
+/* 
+ * Garge-Les-Gonesse
+ * 08.062026
+ * Toggle notes 
+ *
+ * Footer notes: 
+ * Repliable (comme un panneau d’admin)
+ *
+ */
+ 
+
+		
+		/* 🟦 Restructuration de footer: Ajout un contenair global div#notes */
+		footer{
+		    padding-block:0 !important; 
+		}
+		
+		footer h3{
+			margin-top:0; 
+			padding-top:1em;
+			color:#ececea;
+		}
+		.flexfooter {
+		    margin-block:0 !important;
+		}
+		
+		/* 🟦 Toggle */
+		
+		.footer-notes {
+			max-height: 0; /* On le cache à l'etat initial */
+			overflow: hidden;
+			transition: max-height 0.4s ease;
+			padding:0;
+			background:red;
+		}
+		.footer-notes.open {
+			max-height: 10000px; /* On l'ouvre:Assez grand pour tout ton contenu */
+		}

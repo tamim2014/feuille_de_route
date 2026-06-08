@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Feuille de Route Sécurité</title><!-- Lundi 25.05.26  -->
+	<link rel="stylesheet" href="dependance/prism.css" media="screen" />
+    <link rel="stylesheet" href="dependance/dark.css" >
+    <link rel="stylesheet" href="dependance/pagination.css" >
+    <link rel="stylesheet" href="dependance/footer.css" ><!-- footer ndreda -->	
+    <link rel="stylesheet" href="dependance/flexfooter.css" >	
+	
+	<script src="dependance/prism.js" type="text/javascript" ></script>
+	<script src="dependance/pagination.js" defer type="text/javascript" ></script>
+</head>
+
+<body>
+<header  > 
+	
+	<div class="content-footer"> 
+         	
+		 <div class="ndreda-footer" style="padding:0;" >  
+			<!-- animation du footer -->
+			<div style="position: relative; top:0; right:auto; width:auto;">		
+				<div class="wrapper" style=" ">
+					<div class="obj"></div>
+					<div class="obj"></div>
+				</div>
+				
+			</div>	
+			<!-- contenu du footer -->
+			<div id="ndreda-footerG" style="width:100%;" >
+			    <h1>🛡️ Feuille de Route Sécurité(Procédurale) </h1>
+			</div>
+		</div>		
+		 <small class="copyright_"><span style="color:gray;">2026 &copy; -</span> <i style="color:#555">Garges Les Gonesse</i></small> 
+		 <img src="img/coran..png"    class="marfa3"/>
+	</div>	  
+</header>
+<div class="conteneur-reponses separateur1"></div> <!-- séparateur -->
+<main class="contenu">
+<!-- <h1>🛡️ Feuille de Route Sécurité — Lundi 25.05.26</h1>  -->
+
+<!-- SECTION 1 -->
+<div class="section">
+    <div class="accordion-title">🧱 1) Sécurisation de l’authentification</div>
+    <div class="accordion-content">
+
+        <h4>Objets: Empêcher l’accès direct par URL et le contournement du login.</h4>
+        <div class="task">
+            <input type="checkbox" id="t11">
+            <label for="t11">1.1 — backend/url_access_guard.php</label>
+			<div class="script">
+				<pre><code class="language-php">
+						session_start();
+						if (!isset($_SESSION['user_id'])) {
+							header("Location: login.php"); // ✔️index.php et non ❌login.php
+							exit();
+						}
+			    </code></pre>
+			</div>
+        </div>
+
+        <div class="task">
+            <input type="checkbox" id="t12">
+            <label for="t12">1.2 — Protection backend (officiers non admin)</label>
+			<div class="script">
+				<pre><code class="language-php">
+				        // ✔️ modifier_.php &  ✔️ supprimer.php
+						
+						if ($_SESSION["user_role"] !== "admin") {
+							exit("Accès refusé.");
+						}
+			    </code></pre>
+			</div>
+        </div>
+
+        <div class="task">
+            <input type="checkbox" id="t13">
+            <label for="t13">1.3 — backend/logout.php (détruire la session)</label>
+			<div class="script">
+				<pre><code class="language-php">
+						session_start();
+						session_unset();
+						session_destroy();
+						
+						header("Location: login.php"); // ✔️index.php
+						exit();
+			    </code></pre>
+			</div>
+        </div>
+
+        <div class="task">
+            <input type="checkbox" id="t14">
+            <label for="t14">1.4 — Hachage des mots de passe</label>
+			<div class="script">
+				<pre><code class="language-php">
+				       $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+				
+				       //Et pour verifier
+				       password_verify($password, $hash);
+					   
+			    </code></pre>
+			</div>
+        </div>
+
+        <div class="task">
+            <input type="checkbox" id="t15">
+            <label for="t15">1.5 — Empêcher l’accès direct aux scripts AJAX</label>
+			<div class="script">
+				<pre><code class="language-php">
+						//Dans tes scripts backend :
+
+						session_start();
+						if (!isset($_SESSION['user_id'])) {
+							http_response_code(403);
+							exit("Accès interdit");
+						}
+					   
+				</code></pre>
+			</div>
+        </div>
+
+    </div>
+</div>
+
+<!-- SECTION 2 -->
+<div class="section">
+    <div class="accordion-title">🧱 2) Contrôle d’accès aux données</div>
+    <div class="accordion-content">
+
+        <h4>Objets:Gestion des droits (Rôles + Préfectures).</h4>
+
+        <div class="task">
+            <input type="checkbox" id="t21">
+            <label for="t21">2.1 — Ajouter un champ “préfecture” dans la table utilisateurs</label>
+        </div>
+
+        <div class="task">
+            <input type="checkbox" id="t22">
+            <label for="t22">2.2 — Stocker rôle + préfecture dans la session</label>
+        </div>
+
+        <div class="task">
+            <input type="checkbox" id="t23">
+            <label for="t23">2.3 — Filtrer les données selon la préfecture (lecture)</label>
+        </div>
+
+        <div class="task">
+            <input type="checkbox" id="t24">
+            <label for="t24">2.4 — Filtrer les données selon la préfecture (ajout/modification)</label>
+        </div>
+
+    </div>
+</div>
+
+    <!--  PAGINATION  -->
+	<div class="tabcontent" id="tabcontent" style=" margin-top:3em; margin-bottom:0; " >
+		  <section class="containerPagination"  > 
+			<nav class="pagination"  >
+			  <a class="prev">&laquo;</a>
+			  <a   href="#"    class="btn activer">1</a>
+			  <a   href="secusymfony.html" class="btn">2</a> 
+			  <a   href="layout.html"       class="btn">3</a>
+			  <a   onclick="filterSelection('ibnHayyan')"   class="btn">4</a>
+			  <a   onclick="filterSelection('Zamakhchari')" class="btn">5</a>
+			  <a class="next">&raquo;</a>
+			</nav>
+			<nav class="pagination pagination-blue">
+			  <a class="prev">&laquo;</a>
+			  <a    onclick="filterSelection('ibnAtiyya')" class="btn" >1</a>
+			  <a    onclick="filterSelection('ar-Râzî')"   class="btn" >2</a>
+			  <a    onclick="filterSelection('qurtubi')"   class="btn" >3</a>
+			  <a    onclick="filterSelection('baydawi')"   class="btn">4</a>
+			  <a    onclick="filterSelection('zawawi')"    class="btn" >5</a>
+			  <!-- <a    onclick="filterSelection('zawawi')"    class="btn activer" style="display:none;">5</a>  Pourquoi je fais ça? car class "activer" doit être intialement présent sur un bouton pour pour se propager sur les autres bouton suivant le clic utilisateur. Je met un "display:none" car je ne veux pas voir de btn enfoncé  tant que l'utilisateur ne l'a pas touché.( un peu long ce p'tit bavardage mé cpa grav)  -->
+			  <a  class="next btn" onclick="toggleNotes()">&raquo;</a>
+			</nav>
+		  </section>
+	</div>		
+	<!--  fin PAGINATION  -->
+</main>
+
+<div id="notes" class="footer-notes"> <!--  Repliable (comme un panneau d’admin)    -->
+	<div class="conteneur-reponses"></div> <!-- séparateur -->
+	<footer style="height:auto; padding:0;" >     
+		<h3>
+		  Blablabla Blablabla  Blablabla Blablabla   Blablabla Blablabla  
+		</h3>	
+		<div class="flexfooter">
+			<div>
+			   <h4>⭐ 1) Pourquoi tout reste vertical même sans align-items ?</h4>
+				Parce que tu confonds deux axes :
+			   <p>  
+				<b style="color:gold">✔ flex-direction</b>(Axe principal)<BR>
+				→ row = horizontal<BR>
+				→ column = vertical<BR>
+			   </p>
+			   <p>  
+				<b style="color:gold">✔ align-items</b>(axe secondaire)<BR> 
+				→ stretch = étire verticalement (si row)<BR>
+				→ stretch = étire horizontalement (si column)<BR>
+			   </p>
+				Donc :
+			   <P>
+				 👉 align-items ne décide PAS si les éléments sont en colonne ou en ligne.<BR>  
+				 👉 C’est flex-direction qui décide.
+			   </p>
+					Et toi, tu n’as PAS mis flex-direction: column. <BR>
+					 Donc Flexbox utilise sa valeur par défaut :<BR>
+			   <P>
+				   ✅ flex-direction: row (axe principal)<br>
+				   ✅ align-items: stretch  étire verticalement (l’axe secondaire)
+			   </p>
+			</div>
+			<div>
+			  <h4>⭐ 1) Question ?</h4>
+			  ⚠️Touches pas au margin-bottom de la paginition<br>
+			  ⚠️Il est normal c'est juste qu'il n'y a pas assez de section en haut<br>
+			  ⚠️Il suffit d'ajouter une 3em section<br><br>
+			  222222222   2222222222222222222
+			  222222222222222222222222222222222222
+			  <p>
+			  222222222222222222222222222222222222
+			  222222222222222   22222222222222
+			  222222222222222222222222222222222222
+			  </p>
+			  222222222222222222222222222222222222
+			  22222222    222222222222222222222
+			  222222222222222222222222222222222222
+			  222222222222222222222222222222222222
+			  <p>
+			  222222222222222222222222222222222222
+			  2222   2222222222222222222222222222
+			  222222222222222222222222222222222222
+			  222222222   2222222222222222222222
+			  222222222222222222222222222222222222
+			  222222222222222222222222222222222222
+			  </p>
+			  222222222222222222222222222222222222
+			  222222222222222222222222222222222222
+			  22222    222222222222222222222222
+			  222222222222222222222222222222222222
+			  222222222222222222222222222222222222
+			  2222222222222222222222
+			</div>
+			<div>
+			   <h4>⭐ 1) Question ?</h4>
+			  33333333333333333333333333333333333
+			  33333333333333333333333333333333333
+			  33333333333333333333333333333333333
+			  3333333333333
+			  <p>
+			  33333333333333333333333333333333333
+			  33333333333333333333333333333333333
+			  3333333333333333333  3333333333333
+			  33333333333333333333333333333333333
+			  333333333 333333333333333333333333
+			  33333333333333333333333333333333333
+			  </p>
+			  33333333333333333333333333333333333
+			  3333333333
+			</div>
+		</div>
+		
+		<div class="content-footer" style="margin-top:0;">         
+			<div class="ndreda-footer"> 		  
+				<ul type="square">
+					<li>Le client envoie des requêtes </li>
+					<li>Le serveur attend les requêtes des clients et y répond. </li>
+					
+				</ul>
+			</div>		
+			<span class="copyright_"><span style="color:gray;">2019 &copy; -</span> Master Handi</span>
+		</div>	  
+	</footer>
+</div>
+
+
+<script>
+    const PAGE_PREFIX = "procedurale_"; 
+</script>
+<script src="dependance/checklist.js"></script>
+
+
+</body>
+</html>

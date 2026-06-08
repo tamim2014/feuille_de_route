@@ -1,0 +1,50 @@
+/*
+ * Garge-Les-Goness
+ * 03.06.2026
+ */
+
+
+	   .flexfooter{
+	      display:flex;
+		  align-items: stretch;
+		  gap:7em; 
+		  
+
+		   margin:1% auto;
+           padding-block:1em;
+		   padding-right:7%;
+		   padding-left:7%;
+		  
+		   height:auto;
+		   width:80%;
+		   color:#aaa;
+		   
+			  		 
+		 /* Blem responsive:✔️ La solution : autoriser les colonnes à descendre */
+           flex-wrap: wrap;
+		   
+		 /*  background:black; */
+	   }
+	   
+	   
+	   /* Et pour éviter que les colonnes deviennent trop petites :  */ 
+	   .flexfooter > div {
+			flex: 1 1 250px; /* largeur minimale de 250px */
+		}
+	   
+	   /* Le contenu de chaque div est centré
+	    * Comment l'aligner à gauche?
+		*
+      	*/
+		
+		.flexfooter > div {
+			text-align: left;
+		}
+		
+
+		/* la premiere colonne est reduite en largeur */
+		
+		.flexfooter > div {
+			min-width: 0;
+			flex: 1 1 300px !important; /* largeur minimum confortable */
+		}
