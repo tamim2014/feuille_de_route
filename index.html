@@ -139,13 +139,35 @@
 
         <div class="task">
             <input type="checkbox" id="t22">
-            <label for="t22">2.2 — Stocker rôle + préfecture dans la session</label>
-        </div>
+            <label for="t22">2.2 — Stocker "rôle" + "préfecture" dans la session(lors du login)</label>
+            <div class="script">
+				<pre><code class="language-php">
+						session_start();
+						
+						$_SESSION['role'] = $user['role'];
+						$_SESSION['prefecture'] = $user['prefecture'];
+						
+				</code></pre>
+			</div>
+		</div>
 
         <div class="task">
             <input type="checkbox" id="t23">
-            <label for="t23">2.3 — Filtrer les données selon la préfecture (lecture)</label>
-        </div>
+            <label for="t23">2.3 — Filtrer les données selon la préfecture(lecture)⚠️</label>
+            <div class="script">
+				<pre><code class="language-php">
+						session_start();
+						
+						if ($_SESSION['role'] !== 'admin') {
+							$pref = $_SESSION['prefecture'];
+							$sql = "SELECT * FROM table WHERE prefecture = '$pref'";
+						} else {
+							$sql = "SELECT * FROM table";
+						}
+						
+				</code></pre>
+			</div>
+		</div>
 
         <div class="task">
             <input type="checkbox" id="t24">
@@ -154,6 +176,145 @@
 
     </div>
 </div>
+
+<!-- SECTION 3 -->
+<div class="section">
+    <div class="accordion-title">🧱 3) Applications: Accès en lecture</div>
+    <div class="accordion-content">
+
+        <h4>Objets:Gestion des droits (Rôles + Préfectures).</h4>
+
+        <div class="task">
+            <input type="checkbox" id="t31">
+            <label for="t31">3.1 — Accueil:backend/colonne_afficher_naissance.php</label>
+            <div class="script">
+				<pre><code class="language-php">
+						// $R=mysqli_query($conn, "SELECT * FROM  liste WHERE prefecture='".$p."' ") or exit(mysql_error($conn ));
+						
+						if ($_SESSION['role'] !== 'admin') {
+							$pref = $_SESSION['prefecture'];
+						    $R = mysqli_query($conn, "SELECT * FROM  liste WHERE prefecture='".$pref."' ") or exit(mysql_error($conn ));
+						} else {
+							$R=mysqli_query($conn, "SELECT * FROM  liste WHERE prefecture='".$p."' ") or exit(mysql_error($conn ));
+						}
+				</code></pre>
+			</div>
+		</div>
+
+        <div class="task">
+            <input type="checkbox" id="t32">
+            <label for="t32">3.2 — Accueil:backend/colonne_imprimer_acte.php</label>
+            <div class="script">
+				<pre><code class="language-php">
+						//$R=mysqli_query($conn , "SELECT * FROM  liste WHERE prefecture='".$_SESSION["v"]."' ") or exit(mysqli_error($conn ));
+						
+						if ($_SESSION['role'] !== 'admin') {
+							$pref = $_SESSION['prefecture'];
+							$R=mysqli_query($conn , "SELECT * FROM  liste WHERE prefecture='".$pref."' ") or exit(mysqli_error($conn ));
+						} else {
+							$R=mysqli_query($conn , "SELECT * FROM  liste WHERE prefecture='".$_SESSION["v"]."' ") or exit(mysqli_error($conn ));
+						}
+						
+				</code></pre>
+			</div>
+		</div>
+
+        <div class="task">
+            <input type="checkbox" id="t33">
+            <label for="t33">3.3 — Accueil:backend/trier.php</label>
+            <div class="script">
+				<pre><code class="language-php">
+						// $R=mysqli_query($conn , "SELECT * FROM  liste WHERE prefecture='".$_SESSION["v"]."'  ORDER BY nom     ") or exit(mysql_error($conn ));
+						
+						if ($_SESSION['role'] !== 'admin') {
+							$pref = $_SESSION['prefecture'];
+							$R=mysqli_query($conn , "SELECT * FROM  liste WHERE prefecture='".$pref."'  ORDER BY nom     ") or exit(mysql_error($conn ));
+						} else {
+							$R=mysqli_query($conn , "SELECT * FROM  liste WHERE prefecture='".$_SESSION["v"]."'  ORDER BY nom     ") or exit(mysql_error($conn ));
+						}
+				</code></pre>
+			</div>
+		</div>
+
+        <div class="task">
+            <input type="checkbox" id="t34">
+            <label for="t34">3.4 — LectureBD: backend/lectureBD_afficherNaissance.php</label>
+			            <div class="script">
+				<pre><code class="language-php">
+						// $requete = $conn->prepare("SELECT * FROM liste WHERE prefecture = :pr");
+						// $requete->execute(['pr' => $pr]);
+						
+						if ($_SESSION['role'] !== 'admin') {
+							$pref = $_SESSION['prefecture'];
+							$requete = $conn->prepare("SELECT * FROM liste WHERE prefecture = :pref");
+							$requete->execute(['pref' => $pref]);
+						} else {
+							$requete = $conn->prepare("SELECT * FROM liste WHERE prefecture = :pr");
+							$requete->execute(['pr' => $pr]);
+						}
+				</code></pre>
+			</div>
+        </div>
+		
+		<div class="task">
+            <input type="checkbox" id="t35">
+            <label for="t35">3.4 — LectureBD2: Search Engine</label>
+			            <div class="script">
+				<pre><code class="language-php">
+						// ...
+	
+				</code></pre>
+			</div>
+        </div>
+
+    </div>
+</div>
+
+
+
+<!-- SECTION 3 -->
+<div class="section">
+    <div class="accordion-title">🧱 4) Applications: Accès en écriture</div>
+    <div class="accordion-content">
+
+        <h4>Objets:Gestion des droits (Rôles + Préfectures).</h4>
+
+        <div class="task">
+            <input type="checkbox" id="t41">
+            <label for="t41">4.1 — ecritureB:backend/ecritureBD_insertionSQL.php</label>
+            <div class="script">
+				<pre><code class="language-php">
+						// ...
+						
+
+				</code></pre>
+			</div>
+		</div>
+
+        <div class="task">
+            <input type="checkbox" id="t42">
+            <label for="t42">4.2 — ecritureB:backend/modifier_insertionSQL.php</label>
+            <div class="script">
+				<pre><code class="language-php">
+						//modifier.php
+						
+						/* 
+						 * Dès la page d'accueil
+						 * Le mode "Edit" est verouillé pour les non admin.
+						 * Donc, pas la peine de l'implémenter
+						 */
+						
+				</code></pre>
+			</div>
+		</div>
+
+
+ 
+
+    </div>
+</div>
+
+
 
     <!--  PAGINATION  -->
 	<div class="tabcontent" id="tabcontent" style=" margin-top:3em; margin-bottom:0; " >
@@ -244,18 +405,12 @@
 			  222222222222222222222222222222222222
 			  <p>
 			  222222222222222222222222222222222222
-			  2222   2222222222222222222222222222
-			  222222222222222222222222222222222222
+			  2222   222222222222222 22222222222
 			  222222222   2222222222222222222222
 			  222222222222222222222222222222222222
 			  222222222222222222222222222222222222
 			  </p>
-			  222222222222222222222222222222222222
-			  222222222222222222222222222222222222
-			  22222    222222222222222222222222
-			  222222222222222222222222222222222222
-			  222222222222222222222222222222222222
-			  2222222222222222222222
+
 			</div>
 			<div>
 			   <h4>⭐ 1) Question ?</h4>

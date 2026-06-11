@@ -53,7 +53,28 @@
             <label for="t11">1.1 — Mon footer remonte</label>
 			<div class="script">
 				<pre><code class="language-css">
-                      /* 11111111111111111111111111111 */
+					html,
+					body{ 
+					   min-height:100%;
+					}
+					body{
+					   min-height:100vh; 
+					   display:flex;
+					   /* Axe principal vertical */
+					   flex-direction: column;/* Moi je ferais align-items:strech */ 
+					}
+					
+					/* Rempli l'espace vide entre header et footer */ 
+				   
+					main{
+					   flex:1; 
+					}
+					/* Que signifie  flex:1?
+					*
+					* ✔️ flex-grow:1;
+					* ✔️ flex-shrink:1;
+					* ✔️ flex-basis:0; 👉 Ici ça agit comme une hauteur car l'axe principal est column 
+					*/
 			    </code></pre>
 			</div>
         </div>
@@ -70,8 +91,13 @@
 						*  Appliquer une "direction horizontale"
 						*
 						*/
+						form{ /* contenair */
+						   display:flex;
+						   gap:0;
+						}
 						.tabledroite{
-						   flex-direction: row;
+						   /* Pas logique - devrait être sur contenair - Mais resolu ainsi */
+						   flex-direction: row; 
 						}
 
 			    </code></pre>
@@ -330,7 +356,7 @@
 	<div class="conteneur-reponses"></div> <!-- séparateur -->
 	<footer style="height:auto; padding:0;" >     
 		<h3>
-		  Blablabla Blablabla  Blablabla Blablabla   Blablabla Blablabla  
+		  Page après page, brique après brique, bloc par bloc.  
 		</h3>	
 		<div class="flexfooter">
 			<div>
