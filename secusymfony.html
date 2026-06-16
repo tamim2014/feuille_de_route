@@ -153,6 +153,241 @@
     </div>
 </div>
 
+<!-- SECTION 3 -->
+<div class="section">
+    <div class="accordion-title">🧱 3) Applications MVC: &emsp; Accès en lecture (à la base)</div>
+    <div class="accordion-content">
+
+        <h4 style="margin-bottom:0;">Traduction MVC(controleur/template): Table alimentée par une requête sql, via un boucle.</h4>
+		<span style="padding-left:3.5em;"> 🟦repository(repo) → Accès en lecture à la base ✔️</span><br>
+		<span style="padding-left:3.5em;"> 🟦entity manager(em) → Accès en écriture à la base </span>
+
+        <div class="task" style="margin-top:1em;">
+            <input type="checkbox" id="t31">
+            <label for="t31">3.1 — Requête/Affichage: Procédural</label>
+            <div class="script">
+				<pre><code class="language-php">
+						$R=mysqli_query($conn, "SELECT * FROM  liste WHERE prefecture='".$p."' ");
+						//👇 Affichage
+						$table='&lt; table &gt;';
+						$table.='&lt;tr&gt; &lt;th&gt;Nom&lt;/th&gt;&lt;th&gt;Prenom&lt;/th&gt; &lt;tr&gt;';
+						while($ligne=mysqli_fetch_array($R)){
+						    $table.='&lt;tr&gt; &lt;td&gt;'.$ligne["nom"].'&lt;/td&gt;&lt;td&gt;'.$ligne["prenom"].'&lt;/td&gt; &lt;/tr&gt;';
+						}
+						$table.='&lt;/table&gt;';
+						echo $table;
+				</code></pre>
+			</div>
+		</div>
+
+        <div class="task">
+            <input type="checkbox" id="t32">
+            <label for="t32">3.2 — Version DBAL: La version la plus simple, la plus pure, la plus pédagogique.</label>
+            <div class="script">
+				<pre><code class="language-php">
+						#[Route('/liste/{p}', name: 'liste_par_prefecture')]
+						public function listeParPrefecture(string $p, Connection $conn): Response
+						{
+						    $sql = "SELECT nom, prenom FROM liste WHERE prefecture = :p";
+							$rows = $conn->fetchAllAssociative($sql, ['p' => $p]); //✅ recup données
+							
+							return $this->render('liste/table.html.twig', [
+						           'rows'🎯 => $rows  // ✅ envoi au template
+							]);
+						}
+				</code></pre>
+			</div>
+			<div class="script">
+				<pre><code class="language-twig">
+						// templates/liste/table.html.twig
+						&lt;table&gt;
+							&lt;tr&gt;
+								&lt;th&gt;Nom&lt;/th&gt;
+								&lt;th&gt;Prénom&lt;/th&gt;
+							&lt;/tr&gt;
+
+							{% for ligne in rows🎯 %} // while(...) boucle d'affichage
+								&lt;tr&gt;
+									&lt;td&gt;{{ ligne.nom }}&lt;/td&gt;
+									&lt;td&gt;{{ ligne.prenom }}&lt;/td&gt;
+								&lt;/tr&gt;
+							{% endfor %}
+						&lt;/table&gt;
+				</code></pre>
+			</div>
+		</div>
+
+        <div class="task">
+            <input type="checkbox" id="t33">
+            <label style="margin-bottom:0;" for="t33">3.3 — Version Doctrine ORM: Officielle Symfony, usage dans les projets sérieux</label>
+			<p>
+			   <span style="padding-left:3.5em;"> 1️⃣ Entité: Représente une ligne(de table) SQL sous forme d’objet</span><br>
+		       <span style="padding-left:3.5em;"> 2️⃣ Repository: Contient les requêtes ORM </span><br>
+		       <span style="padding-left:3.5em;"> 3️⃣ Contrôleur:	Récupère les objets et les envoie à Twig </span>
+            </p>
+			<div class="script">
+				<pre><code class="language-php">
+						// 1️⃣  L’ENTITÉ (ORM): Liste.php
+						namespace App\Entity;
+						use Doctrine\ORM\Mapping as ORM;
+						
+						#[ORM\Entity(repositoryClass: App\Repository\ListeRepository::class)]
+						class Liste
+						{
+							#[ORM\Id]
+							#[ORM\GeneratedValue]
+							#[ORM\Column]
+							private ?int $id = null;
+							
+							#[ORM\Column(length: 100)] // nombre de caracteres
+							private ?string $nom = null;
+							
+							#[ORM\Column(length: 100)]
+							private ?string $prenom = null;
+							
+							#[ORM\Column(length: 50)]
+							private ?string $prefecture = null;
+							
+							// getters/setters...
+						}
+				</code></pre>
+			</div>
+			<div class="script">
+				<pre><code class="language-php">
+						// 2️⃣  LE REPOSITORY (ORM): src/Repository/ListeRepository.php
+						// SELECT * FROM  liste WHERE prefecture=$p
+						// Ici, on utilise QueryBuilder ORM, pas SQL
+						
+						public function findByPrefecture(string $p): array
+						{
+							return $this->createQueryBuilder('l')
+							   ->where('l.prefecture = :p')
+							   ->setParameter('p', $p)
+							   ->orderBy('l.nom', 'ASC')
+							   ->getQuery()
+							   ->getResult();
+						}
+				</code></pre>
+			</div>
+			<div class="script">
+				<pre><code class="language-php">
+						// 3️⃣   LE CONTRÔLEUR (ORM): Il récupère les objets et les envoie au template.
+
+						#[Route('/liste/{p}', name: 'liste_par_prefecture')]
+						{
+							$rows = $repo->findByPrefecture($p);
+							   
+							return $this->render('liste/table.html.twig', [
+							   'rows' => $rows
+							]);
+						}
+				</code></pre>
+			</div>
+		</div>
+
+        <div class="task">
+            <input type="checkbox" id="t34">
+            <label for="t34">3.4 — Version avec Repository: src/Repository/ListeRepository.php</label>
+			<div class="script">
+				<pre><code class="language-php">
+				        // 1️⃣  LE REPOSITORY
+						namespace App\Repository;
+						
+						use App\Entity\Liste;
+						use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+						use Doctrine\Persistence\ManagerRegistry;
+						
+						class ListeRepository extends ServiceEntityRepository
+						{
+							public function __construct(ManagerRegistry $registry)
+                            {
+							    parent::__construct($registry, Liste::class);  
+						    } 
+							
+							public function findByPrefecture(string $p): array
+                            {
+							    return $this->createQueryBuilder('l')
+                                    ->where('l.prefecture = :p')								
+                                    ->setParameter('p', $p)								
+                                    ->getQuery()								
+                                    ->getResult();								
+						    }
+						}
+				</code></pre>
+			</div>
+			<div class="script">
+				<pre><code class="language-php">
+				        // 2️⃣  Le Contrôleur : il demande au Repository
+						// src/Controller/ListeController.php
+						
+						#[Route('/liste/{p}', name: 'liste_par_prefecture')]
+						public function listeParPrefecture(string $p, ListeRepository $repo): Response
+						{
+							$rows = $repo->findByPrefecture($p);
+							
+							return $this->render('liste/table.html.twig', [
+							    'rows' => $rows
+							]);
+						}
+				</code></pre>
+			</div>
+        </div>
+	    	
+		<div class="task">
+            <input type="checkbox" id="t35">
+            <label for="t35">3.5 — Questionnaire</label>
+			<div class="script">
+				<pre><code class="language-php">
+					//Est-ce que ListeRepository.php est un service?
+					
+					/*
+					Oui : un Repository Symfony est un service.
+					Mais… pas un service comme les autres.
+					C’est un service auto‑enregistré, fait automatiquement par Symfony.
+					*/
+	
+				</code></pre>
+			</div>
+        </div>
+		
+
+    </div>
+</div>
+
+
+<!-- SECTION 4 -->
+<div class="section">
+    <div class="accordion-title">🧱 4) Applications MVC: &emsp; Accès en écriture (à la base)</div>
+    <div class="accordion-content">
+
+        <h4>Objets: ////////////</h4>
+
+        <div class="task">
+            <input type="checkbox" id="t41">
+            <label for="t41">4.1 — ///////</label>
+            <div class="script">
+				<pre><code class="language-php">
+						// ...
+						
+
+				</code></pre>
+			</div>
+		</div>
+
+        <div class="task">
+            <input type="checkbox" id="t42">
+            <label for="t42">4.2 — //////////////////</label>
+            <div class="script">
+				<pre><code class="language-php">
+						// ...
+						
+						
+				</code></pre>
+			</div>
+		</div>
+    </div>
+</div>
+
 
 
 
