@@ -349,8 +349,6 @@
 				</code></pre>
 			</div>
         </div>
-		
-
     </div>
 </div>
 
@@ -389,6 +387,55 @@
 </div>
 
 
+<!-- SECTION 5 -->
+<div class="section">
+    <div class="accordion-title">🧱 5) Introduction aux services</div>
+    <div class="accordion-content">
+		<img src="dependance/img/arbo.png">
+        <div class="task">
+            <input type="checkbox" id="t51">
+            <label for="t51">5.1 — Le service</label>
+            <div class="script">
+				<pre><code class="language-php">
+				    // src/service/coucou.php
+					namespace   App\Service;
+					
+					class Coucou
+					{
+					   public function dite(cc): string {
+					      return 'cc !';
+					   }
+					}
+						
+                    // 👉 Construire une bibliothèque de services( dans un projet symfony)
+				</code></pre>
+			</div>
+		</div>
+
+        <div class="task">
+            <input type="checkbox" id="t52">
+            <label for="t52">5.2 — Le contrôleur</label>
+            <div class="script">
+				<pre><code class="language-php">
+				    // src/controller/PersonneControler.php
+					
+					use App\Service\Coucou;
+					
+					class PersonneController
+					{
+					  public function  __construct(private Coucou $coucou){}
+					   ...
+					  public function indexAlls(...){
+					    echo($this->Coucou->dit(cc));
+					  }
+					}
+				</code></pre>
+			</div>
+		</div>
+    </div>
+</div>
+
+
 
 
 
@@ -409,7 +456,10 @@
 			      3
 				  <span class="popuptext">Logique layout !</span>
 			  </a>
-			  <a   onclick="filterSelection('ibnHayyan')"   class="btn">4</a>
+			  <a   href="debug.html"   class="btn popup-bottom">
+			       4
+				   <span class="popuptext">Débug ⚠️</span>
+			  </a>
 			  <a   onclick="filterSelection('Zamakhchari')" class="btn">5</a>
 			  <a class="next">&raquo;</a>
 			</nav>
