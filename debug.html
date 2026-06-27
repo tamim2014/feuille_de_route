@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, roles-scalable=yes">
+    <title>Protocol debug</title><!-- Mardi 02.06.26  -->
+	<link rel="stylesheet" href="dependance/prism.css" media="screen" />
+    <link rel="stylesheet" href="dependance/dark.css" >
+    <link rel="stylesheet" href="dependance/pagination.css" >
+    <link rel="stylesheet" href="dependance/footer.css" ><!-- footer ndreda -->	
+	<link rel="stylesheet" href="dependance/flexfooter.css" >
+	
+	<script src="dependance/prism.js" type="text/javascript" ></script>
+	<script src="dependance/pagination.js" defer type="text/javascript" ></script>
+</head>
+
+<body>
+<header> 
+	
+	<div class="content-footer"> 
+         	
+		 <div class="ndreda-footer" style="padding:0;" >  
+			<!-- animation du footer -->
+			<div style="position: relative; top:0; right:auto; width:auto;">		
+				<div class="wrapper" style=" ">
+					<div class="obj"></div>
+					<div class="obj"></div>
+				</div>
+				
+			</div>	
+			<!-- contenu du footer -->
+			<div id="ndreda-footerG" style="width:100%;" >
+			    <h1>🛠️ Débug protocol </h1>
+			</div>
+		</div>		
+		 <small class="copyright_"><span style="color:gray;">2026 &copy; -</span> <i style="color:#555">Garges Les Gonesse</i></small> 
+		 <span class="marfa3 logo-emoji">🔷</span>
+	</div>	  
+</header>
+
+
+<div class="conteneur-reponses separateur1"></div> <!-- séparateur -->
+<main class="contenu">
+<!-- <h1>🛡️ Feuille de Route Sécurité — Lundi 25.05.26</h1>  -->
+
+<!-- SECTION 1 -->
+<div class="section">
+    <div class="accordion-title">🧱 1) PHP Diagnostic 🐘</div>
+    <div class="accordion-content">
+
+        <h4>Objets: ... </h4>
+        <div class="task">
+            <input type="checkbox" id="t11">
+            <label for="t11">1.1 — <b>error_reporting(E_ALL)</b>: &emsp; En haut du fichier  <u><i> pour voir les problèmes</i></u></label>
+			<div class="script">
+				<pre><code class="language-php">
+					error_reporting(E_ALL);
+					ini_set('display_errors', 1);
+					
+					“Montre-moi toutes les erreurs, même les plus petites".  
+				   
+					// C'est comme allumer la lumière dans une pièce sombre.
+
+					/* 👉 ça montre?
+					*
+					* ✔️ Les erreurs fatales,
+					* ✔️ Les warnings,
+					* ✔️ Notices, 
+					* ✔️ Erreurs SQL,📌 
+					* ✔️ Erreurs de syntaxe,📌 
+					* ✔️ erreurs de variables non définies
+	
+					*  👉 ça montre pas?
+					* 
+					* ✔️ Ça ne montre pas les valeurs,
+					* ✔️ ça montre seulement les problèmes.
+					*/
+			    </code></pre>
+			</div>
+        </div>
+
+        <div class="task">
+            <input type="checkbox" id="t12">
+            <label for="t12">1.2 — 1.2 <b>var_dump()</b>: En bas de la variable <u><i> pour voir son contenu</i></u></label>
+			<div class="script">
+				<pre><code class="language-php">
+					var_dump($variable);
+					die();
+					
+					“Montre-moi ce qu’il y a dans cette variable.”  
+
+					/* 👉 Comment faire?
+					*
+					* ✔️ Pareil qu'en éléctricité:
+					* ✔️ Poser(var_dump) en bas de la 1ère variable du fichier,
+					* ✔️ Descendre à la variable suivante,
+					* ✔️ ... jusqu'à trouver où ça passe pas 
+					* 
+					*/
+			    </code></pre>
+			</div>
+        </div>
+		
+    </div>
+</div>
+
+<!-- SECTION 2 -->
+<div class="section">
+    <div class="accordion-title">🧱 2) JS Diagnostic</div>
+    <div class="accordion-content">
+
+        <h4>Exemple: Le filtre "Prefecture s'affiche, mais la table ne s'affiche pas</h4>
+
+        <div class="task">
+            <input type="checkbox" id="t21">
+            <label for="t21">2.1 Console</label>
+			<div class="script">
+				<pre><code class="language-JavaScript">
+					✅ 1. Vérifier les erreurs
+					   👉 Dans F12/Console, regardes s'il y a du rouge => Uncaught Type Error ...
+					   👉 Une erreur JavaScript peut empêcher le chargement de la table
+					✅ 2. Remarque:
+					   Aaaaaaaaaaaaaaaaaa
+					   Bbbbbbbbbbbbbbbbbbbbb
+			    </code></pre>
+			</div>
+        </div>
+
+        <div class="task">
+            <input type="checkbox" id="t22">
+            <label for="t22">2.2 console.log</label>
+			<div class="script">
+				<pre><code class="language-JavaScript">
+					✅ 1. Vérifier que la fonction(findBy) est appelée
+					   function findBy(){ 
+					     console.log("findBy exécuté"); 
+					     ...  
+					   } 
+					   👉 Si rien ne s'affiche dans F12/console => Le problème est avant findBy: 
+					       ✔️ événement non déclanché 
+					       ✔️ Capture non effectuée: Bouton mal branché 
+					       ✔️ erreur js précédent, ... etc
+						   
+					✅ 2. Afficher la valeur du filtre
+					   function findBy(){ 
+					     const filtre = document.getElementById("recherche").value; 
+					     console.log("Filtre :", filtre);  
+					     ...  
+					   } 
+					   👉 Tu verras par exemple =>  Filtre: Hambou 
+					   
+					✅ 3. Si tu fais un fetch/Ajax
+					   fetch(url).then( response => response.json()) 
+					     .then( data => { console.log("Résultat réçus:", data); } ); 
+					    
+					   👉 Si data est vide =>  Résultat réçu: []
+					   👉 Alors ton backend ne renvoie rien
+			    </code></pre>
+			</div>
+        </div>
+
+        <div class="task">
+            <input type="checkbox" id="t23">
+            <label for="t23">2.3 Network</label>
+			<div class="script">
+				<pre><code class="language-JavaScript">
+					✅ 1. Vérifier la requête réseau
+					     Dans F12->Network->filtre Fetch/XHR 
+					     Clique sur ton bouton Select (prefecture).  
+					   👉 puis regarde: 
+					       ✔️ Est-ce qu'une requête part?
+					       ✔️ Quelle url est appelée? ⚠️ c'était là le problème ⚠️ 
+					       ✔️ Quel est le code retour ? 200, 404, 500 ...
+					       ✔️ Quel est le contenu de la reponse ( dans l'onglet Response)?
+						   
+					✅ 2. Remarque
+					     Très souvent, quand le filtre s'affiche mais pas la table, 
+					     le coupable se trouve dans Network plutôt que dans Console.  
+			    </code></pre>
+			</div>
+        </div>
+
+    </div>
+</div>
+
+<!-- SECTION 3 -->
+<div class="section">
+    <div class="accordion-title">🧱 3) Débug protocol</div>
+    <div class="accordion-content">
+
+        <h4>Objets: ...</h4>
+
+        <div class="task">
+            <input type="checkbox" id="t31">
+            <label for="t31">Quant quelque chose ne s'affiche pas, on regarde toujours dans cet ordre: </label>
+			<div class="script" style="padding:1em; font-size:1rem; color:#aaa;">
+			  <div style="margin-left:1em;">
+					1️⃣ <b style="color:#ececea;">Console</b> : y a-t-il une erreur javaScript?<br>
+					2️⃣ <b style="color:#ececea;">Console.log</b> : Ma fonction est-elle appelée ?<br>
+					3️⃣ <b style="color:#ececea;">Network</b> :  La requête part-elle?<br>
+					4️⃣ <b style="color:#ececea;">Response</b> : Le serveur renvoie-t-il les données attendues?<br>  
+					5️⃣ <b style="color:#ececea;">DOM/Elements</b> : Les données sont-elles présentes mais cachées par le CC?
+			  </div>
+			       ça évite de passer 1H à soupçonner le backend<br> 
+					 -  alors que c'est parfois juste un selecteur css<br> 
+					 -  ou un nom de propriété mal ortographié
+			</div>
+        </div>
+	</div>
+</div>
+
+    <!--  PAGINATION  -->
+	<div class="tabcontent" id="tabcontent" style=" margin-top:3em; margin-bottom:0; " >
+		  <section class="containerPagination"  > 
+			<nav class="pagination"  >
+			  <a class="prev">&laquo;</a>
+			  <a   href="index.html"  class="btn popup">
+			      1
+				  <span class="popuptext">Sécurité procedurale !</span>
+			  </a>
+			  <a   href="secusymfony.html"   class="btn popup-bottom">
+			       2
+				   <span class="popuptext">Sécurité symfony !</span>
+			  </a> 
+			  <a   href="#"  class="btn popup activer default-btn">
+			      3
+				  <span class="popuptext">Logique layout !</span>
+			  </a>
+			  <a   href="debug.html"   class="btn popup-bottom">
+			       4
+				   <span class="popuptext">Débug ⚠️</span>
+			  </a>
+			  <a   onclick="filterSelection('Zamakhchari')" class="btn">5</a>
+			  <a class="next">&raquo;</a>
+			</nav>
+			<nav class="pagination pagination-blue">
+			  <a class="prev">&laquo;</a>
+			  <a    onclick="filterSelection('ibnAtiyya')" class="btn" >1</a>
+			  <a    onclick="filterSelection('ar-Râzî')"   class="btn" >2</a>
+			  <a    onclick="filterSelection('qurtubi')"   class="btn" >3</a>
+			  <a    onclick="filterSelection('baydawi')"   class="btn">4</a>
+			  <a    onclick="filterSelection('zawawi')"    class="btn" >5</a>
+			  <!-- <a    onclick="filterSelection('zawawi')"    class="btn activer" style="display:none;">5</a>  Pourquoi je fais ça? car class "activer" doit être intialement présent sur un bouton pour pour se propager sur les autres bouton suivant le clic utilisateur. Je met un "display:none" car je ne veux pas voir de btn enfoncé  tant que l'utilisateur ne l'a pas touché.( un peu long ce p'tit bavardage mé cpa grav)  -->
+			  <a id="btnNotes" class="next btn popup toggle-btn" onclick="toggleNotes();">
+					&raquo;
+					<span class="popuptext" id="myPopup">Notes de bas de page !</span>
+			  </a>
+			</nav>
+		  </section> 
+	</div>		
+	<!--  fin PAGINATION  -->
+</main>
+
+
+<div id="notes" class="footer-notes"> <!--  Repliable (comme un panneau d’admin)    -->
+	<div class="conteneur-reponses"></div> <!-- séparateur -->
+	<footer style="height:auto; padding:0;" >     
+		<h3>
+		  Page après page, brique après brique, bloc par bloc.  
+		</h3>	
+		<div class="flexfooter">
+			<div>
+				   <h4>⭐ 1)Le combo de reference:</h4>
+
+				   <p>  
+					<b style="color:gold">✔ Liste des prorietés:</b><BR>
+					→ <code>MDN Web Docs(developer.mozilla.org)</code><BR>
+					→ <code> |||||||||||||||||||||||||||||||</code><BR>
+				   </p>
+				   <p>  
+					<b style="color:gold">✔ Tests des prorietés:</b><BR> 
+					→ <code>www.w3schools.com/cssref/</code><BR>
+					→ <code> |||||||||||||||||||||||||||||||</code><BR>
+				   </p>
+					Donc :
+				   <P>
+					 👉 ///////////////////////////////////////////////////<BR>  
+					 👉 /////////////////////////////////////////////////.
+				   </p>
+						/////////////////////////////////////////// <BR>
+						 ////////////////////////////////////////<BR>
+				   <P>
+					   ✅ \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ <br>
+					   ✅ \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+				   </p>
+			</div>
+			<div>
+				   <h4>⭐ 1) Pourquoi tout reste vertical même sans align-items ?</h4>
+					Parce que tu confonds deux axes :
+				   <p>  
+					<b style="color:gold">✔ flex-direction</b>(Axe principal)<BR>
+					→ row = horizontal<BR>
+					→ column = vertical<BR>
+				   </p>
+				   <p>  
+					<b style="color:gold">✔ align-items</b>(axe secondaire)<BR> 
+					→ stretch = étire verticalement (si row)<BR>
+					→ stretch = étire horizontalement (si column)<BR>
+				   </p>
+					Donc :
+				   <P>
+					 👉 align-items ne décide PAS si les éléments sont en colonne ou en ligne.<BR>  
+					 👉 C’est flex-direction qui décide.
+				   </p>
+						Et toi, tu n’as PAS mis flex-direction: column. <BR>
+						 Donc Flexbox utilise sa valeur par défaut :<BR>
+				   <P>
+					   ✅ flex-direction: row (axe principal)<br>
+					   ✅ align-items: stretch  étire verticalement (l’axe secondaire)
+				   </p>
+			</div>
+			<div>
+			      <h4>⭐ 1) On documente ses cicatrices techniques.</h4>
+				  un grimoire de survie PHP/Symfony.<br>
+				  🐘🛠️ Notes de Terrain — Debug PHP<br>
+				  🛠️🐘 Carnet de Bataille — Symfony & PHP<br>
+				  🐘🛠️ Les Cicatrices du Backend <br>
+	              👉 Tu as transformé un plan en méthode.<br>  
+                  👉 Tu as transformé une méthode en réflexe.<br>  
+                  👉 Tu as transformé un réflexe en outil personnel.<br>
+				  C’est ça, la vraie progression.
+				  <p>
+				  Y’a des gens, quand ils sont seuls, 
+				  ça tourne pas rond dans leur tête hhhh<br><br>.
+				  33333333333333333333333333333333333
+				  3333333333333333333  3333333333333
+				  33333333333333333333333333333333333
+				  333333333 333333333333333333333333
+				  33333333333333333333333333333333333
+				  </p>
+				  33333333333333333333333333333333333
+				  3333333333
+			</div>
+		</div>
+		
+		<div class="content-footer" style="margin-top:0;">         
+			<div class="ndreda-footer"> 		  
+				<ul type="square">
+					<li>Le client envoie des requêtes </li>
+					<li>Le serveur attend les requêtes des clients et y répond. </li>
+					
+				</ul>
+			</div>		
+			<span class="copyright_"><span style="color:gray;">2019 &copy; -</span> Master Handi</span>
+		</div>	  
+	</footer>
+</div>
+
+<script>
+    const PAGE_PREFIX = "layout_"; 
+</script>
+<script src="dependance/checklist.js"></script>
+
+</body>
+</html>
