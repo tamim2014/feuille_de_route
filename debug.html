@@ -51,7 +51,7 @@
         <h4>Objets: ... </h4>
         <div class="task">
             <input type="checkbox" id="t11">
-            <label for="t11">1.1 — <b>error_reporting(E_ALL)</b>: &emsp; En haut du fichier  <u><i> pour voir les problèmes</i></u></label>
+            <label for="t11">1.1 <b>error_reporting(E_ALL)</b>: &emsp; En haut du fichier  <u><i> pour voir les problèmes</i></u></label>
 			<div class="script">
 				<pre><code class="language-php">
 					error_reporting(E_ALL);
@@ -81,7 +81,7 @@
 
         <div class="task">
             <input type="checkbox" id="t12">
-            <label for="t12">1.2 — 1.2 <b>var_dump()</b>: En bas de la variable <u><i> pour voir son contenu</i></u></label>
+            <label for="t12">1.2  <b>var_dump()</b>: En bas de la variable <u><i> pour voir son contenu</i></u></label>
 			<div class="script">
 				<pre><code class="language-php">
 					var_dump($variable);
@@ -109,7 +109,7 @@
     <div class="accordion-title">🧱 2) JS Diagnostic</div>
     <div class="accordion-content">
 
-        <h4>Exemple: Le filtre "Prefecture s'affiche, mais la table ne s'affiche pas</h4>
+        <h4>Exemple: Le filtre "Prefecture" s'affiche, mais la table ne s'affiche pas</h4>
 
         <div class="task">
             <input type="checkbox" id="t21">
@@ -132,8 +132,9 @@
 			<div class="script">
 				<pre><code class="language-JavaScript">
 					✅ 1. Vérifier que la fonction(findBy) est appelée
+					
 					   function findBy(){ 
-					     console.log("findBy exécuté"); 
+					     console.log("findBy exécuté"); 📌
 					     ...  
 					   } 
 					   👉 Si rien ne s'affiche dans F12/console => Le problème est avant findBy: 
@@ -142,14 +143,19 @@
 					       ✔️ erreur js précédent, ... etc
 						   
 					✅ 2. Afficher la valeur du filtre
+					
+					   // Lui affecter un id au préalable 
+					   
 					   function findBy(){ 
-					     const filtre = document.getElementById("recherche").value; 
-					     console.log("Filtre :", filtre);  
+					     const filtre = document.getElementById("recherche").value; 📌
+					     console.log("Filtre :", filtre); 📌 
 					     ...  
 					   } 
+					   👉 &lt;li>&lt;a href="#" class="island1" id="recherche"> Hambou &lt/a>&lt/li> 
 					   👉 Tu verras par exemple =>  Filtre: Hambou 
 					   
 					✅ 3. Si tu fais un fetch/Ajax
+					
 					   fetch(url).then( response => response.json()) 
 					     .then( data => { console.log("Résultat réçus:", data); } ); 
 					    
@@ -165,15 +171,17 @@
 			<div class="script">
 				<pre><code class="language-JavaScript">
 					✅ 1. Vérifier la requête réseau
+					
 					     Dans F12->Network->filtre Fetch/XHR 
-					     Clique sur ton bouton Select (prefecture).  
+					     Clique sur ton Lien: &lt;li>&lt;a href="#" class="island1" id="recherche"> Hambou &lt/a>&lt/li>  
 					   👉 puis regarde: 
 					       ✔️ Est-ce qu'une requête part?
-					       ✔️ Quelle url est appelée? ⚠️ c'était là le problème ⚠️ 
+					       ✔️ Quelle url est appelée? ❌ c'était là le problème! ❌ => Solution: Url dynamique
 					       ✔️ Quel est le code retour ? 200, 404, 500 ...
 					       ✔️ Quel est le contenu de la reponse ( dans l'onglet Response)?
 						   
-					✅ 2. Remarque
+					✅ 2. Remarque:
+					
 					     Très souvent, quand le filtre s'affiche mais pas la table, 
 					     le coupable se trouve dans Network plutôt que dans Console.  
 			    </code></pre>
