@@ -44,7 +44,7 @@
 
 <!-- SECTION 1 -->
 <div class="section">
-    <div class="accordion-title">🧱 1) Sécurisation de l’authentification</div>
+    <div class="accordion-title">🧱 1) Sécurités: Url, Edit/Delet, Sessions, Authentification(Hash), Script Ajax</div>
     <div class="accordion-content">
 
         <h4>Objets: Empêcher l’accès direct par URL et le contournement du login.</h4>
@@ -131,6 +131,10 @@
     <div class="accordion-content">
 
         <h4>Objets:Gestion des droits (Rôles + Préfectures).</h4>
+	    <p>
+		   Un officier d'état civil ne peut accéder qu'aux documents de la préfecture où il est affecté.
+		   Seuls le préfet et l'agent "admin" peuvent accéder à toute la surface de données.
+        </p> 		
 
         <div class="task">
             <input type="checkbox" id="t21">
@@ -144,8 +148,10 @@
 				<pre><code class="language-php">
 						session_start();
 						
-						$_SESSION['role'] = $user['role'];
-						$_SESSION['prefecture'] = $user['prefecture'];
+						$_SESSION['user_role']  = $row['roles'];
+						$_SESSION['prefecture'] = $row['prefecture'];
+						
+						// à mettre sur: backend/authentification.php
 						
 				</code></pre>
 			</div>
@@ -158,12 +164,17 @@
 				<pre><code class="language-php">
 						session_start();
 						
-						if ($_SESSION['role'] !== 'admin') {
+						if ($_SESSION['user_role'] !== 'admin') {
 							$pref = $_SESSION['prefecture'];
 							$sql = "SELECT * FROM table WHERE prefecture = '$pref'";
 						} else {
 							$sql = "SELECT * FROM table";
 						}
+						
+						à Repliquer dans:
+							✔️backend/colonne_afficher_naissance.php
+							✔️backend/lectureBD_afficherNaissance.php
+							✔️Le moteur de recherche
 						
 				</code></pre>
 			</div>
@@ -171,8 +182,49 @@
 
         <div class="task">
             <input type="checkbox" id="t24">
-            <label for="t24">2.4 — Filtrer les données selon la préfecture (ajout/modification)</label>
-        </div>
+            <label for="t24">2.4 — Filtrer les données selon la préfecture (écriture: Ajout)</label>
+            <div class="script">
+				<pre><code class="language-php">
+						// Un admin → peut ajouter/modifier n’importe où
+						// Un officier → ne peut ajouter/modifier que dans sa préfecture
+						
+						session_start();
+						
+						if ($_SESSION['user_role'] !== 'admin') {
+							$_POST['prefecture'] = $_SESSION['prefecture'];
+						}
+						
+						Ensuite tu fais ton INSERT normalement.
+						
+						à Repliquer dans:
+							✔️backend/ecritureBD_insertionSQL.php
+				</code></pre>
+			</div>
+		</div>
+		
+		<div class="task">
+            <input type="checkbox" id="t25">
+            <label for="t25">2.5 — Filtrer les données selon la préfecture (écriture: Edit)</label>
+            <div class="script">
+				<pre><code class="language-php">
+						session_start();
+						
+						// Si ce n est pas un admin: On force la préfecture
+						if ($_SESSION['user_role'] !== 'admin') {
+							$_POST['prefecture'] = $_SESSION['prefecture'];
+						}
+						
+						// Ensuite : On l'impose dans la requête
+						$pref = $_POST['prefecture'];
+						$sql = "UPDATE naissance SET ... prefecture='$pref' WHERE id=$id";
+						
+						à Repliquer dans:
+							✔️backend/modifier_insertionSQL.php
+				</code></pre>
+			</div>
+		</div>
+		
+		
 
     </div>
 </div>
@@ -191,9 +243,9 @@
 				<pre><code class="language-php">
 						// $R=mysqli_query($conn, "SELECT * FROM  liste WHERE prefecture='".$p."' ") or exit(mysql_error($conn ));
 						
-						if ($_SESSION['role'] !== 'admin') {
-							$pref = $_SESSION['prefecture'];
-						    $R = mysqli_query($conn, "SELECT * FROM  liste WHERE prefecture='".$pref."' ") or exit(mysql_error($conn ));
+						if ($_SESSION['user_role'] !== 'admin') {
+							$prefUnique = $_SESSION['prefecture'];
+						    $R = mysqli_query($conn, "SELECT * FROM  liste WHERE prefecture='".$prefUnique."' ") or exit(mysql_error($conn ));
 						} else {
 							$R=mysqli_query($conn, "SELECT * FROM  liste WHERE prefecture='".$p."' ") or exit(mysql_error($conn ));
 						}
@@ -203,12 +255,12 @@
 
         <div class="task">
             <input type="checkbox" id="t32">
-            <label for="t32">3.2 — Accueil:backend/colonne_imprimer_acte.php</label>
+            <label for="t32">3.2 — Accueil:backend/colonne_imprimer_acte.php : ❌<span style="color:#ff8080;">Obsolète ← backend/colonne_afficher_naissance.php suffit</span>❌ </label>
             <div class="script">
 				<pre><code class="language-php">
 						//$R=mysqli_query($conn , "SELECT * FROM  liste WHERE prefecture='".$_SESSION["v"]."' ") or exit(mysqli_error($conn ));
 						
-						if ($_SESSION['role'] !== 'admin') {
+						if ($_SESSION['user_role'] !== 'admin') {
 							$pref = $_SESSION['prefecture'];
 							$R=mysqli_query($conn , "SELECT * FROM  liste WHERE prefecture='".$pref."' ") or exit(mysqli_error($conn ));
 						} else {
@@ -221,12 +273,12 @@
 
         <div class="task">
             <input type="checkbox" id="t33">
-            <label for="t33">3.3 — Accueil:backend/trier.php</label>
+            <label for="t33">3.3 — Accueil:backend/trier.php: ❌<span style="color:#ff8080;">Obsolète ← backend/colonne_afficher_naissance.php suffit</span>❌</label>
             <div class="script">
 				<pre><code class="language-php">
 						// $R=mysqli_query($conn , "SELECT * FROM  liste WHERE prefecture='".$_SESSION["v"]."'  ORDER BY nom     ") or exit(mysql_error($conn ));
 						
-						if ($_SESSION['role'] !== 'admin') {
+						if ($_SESSION['user_role'] !== 'admin') {
 							$pref = $_SESSION['prefecture'];
 							$R=mysqli_query($conn , "SELECT * FROM  liste WHERE prefecture='".$pref."'  ORDER BY nom     ") or exit(mysql_error($conn ));
 						} else {
@@ -239,15 +291,20 @@
         <div class="task">
             <input type="checkbox" id="t34">
             <label for="t34">3.4 — LectureBD: backend/lectureBD_afficherNaissance.php</label>
-			            <div class="script">
+			<div class="script">
 				<pre><code class="language-php">
 						// $requete = $conn->prepare("SELECT * FROM liste WHERE prefecture = :pr");
 						// $requete->execute(['pr' => $pr]);
 						
-						if ($_SESSION['role'] !== 'admin') {
-							$pref = $_SESSION['prefecture'];
-							$requete = $conn->prepare("SELECT * FROM liste WHERE prefecture = :pref");
-							$requete->execute(['pref' => $pref]);
+						if ($_SESSION['user_role'] !== 'admin') {
+							$prefUnique = $_SESSION['prefecture'];
+							$requete = $conn->prepare("SELECT * FROM liste WHERE prefecture = :prefUnique");
+							$requete->execute(['prefUnique' => $prefUnique]);
+							// Message
+							if($pr !== $prefUnique){
+							    echo "Accès restreint à la préfecture de: <b>".$prefUnique."</b>";
+							    exit;
+							}
 						} else {
 							$requete = $conn->prepare("SELECT * FROM liste WHERE prefecture = :pr");
 							$requete->execute(['pr' => $pr]);
@@ -256,37 +313,97 @@
 			</div>
         </div>
 		
+    
+	
+			
 		<div class="task">
             <input type="checkbox" id="t35">
-            <label for="t35">3.4 — LectureBD2: Search Engine</label>
-			            <div class="script">
+            <label for="t35">3.5 — LectureBD2: Search Engine</label>
+			<div class="script">
 				<pre><code class="language-php">
-						// ...
-	
+						// backend/lectureBD2_searchPlayBack.ph(recherche par numéro)
+						
+						if ($_SESSION['user_role'] !== 'admin') {
+							$prefUnique = $_SESSION['prefecture'];
+							$sql = "SELECT * FROM liste WHERE acte = :num AND prefecture = :prefUnique ";
+							$stmt = $conn->prepare($sql);
+							$stmt->execute([ 'num' => $num, 'prefUnique' => $prefUnique ]);
+							// Message
+							if($p !== $prefUnique){
+							    echo "Aucun document trouvé dans la préfecture de: <b>".$prefUnique."</b>";
+							    exit;
+							}
+						} else {
+							$sql = "SELECT * FROM liste WHERE acte = :num";
+							$stmt = $conn->prepare($sql);
+							$stmt->execute([ 'num' => $num ]);
+						}
 				</code></pre>
 			</div>
+
+		    <div class="script">
+				<pre><code class="language-php">
+						// backend/lectureBD2_searchPlayBackByName.ph(recherche par nom)
+						
+						if ($_SESSION['user_role'] !== 'admin') {
+							$prefUnique = $_SESSION['prefecture'];
+							$sql = "SELECT * FROM liste WHERE nom = :nom AND prefecture = :prefUnique ";
+							$stmt = $conn->prepare($sql);
+							$stmt->execute([ 'nom' => $nom, 'prefUnique' => $prefUnique ]);
+							// Message
+							if($p !== $prefUnique){
+							    echo "Aucun document trouvé dans la préfecture de: <b>".$prefUnique."</b>";
+							    exit;
+							}
+						} else {
+							$sql = "SELECT * FROM liste WHERE nom = :nom";
+							$stmt = $conn->prepare($sql);
+							$stmt->execute([ 'nom' => ltrim($nom) ]);
+						}
+				</code></pre>
+			</div>
+			<p>
+			  Bug: Si résultat negatif sur une prefecture. Et si  le document éxiste dans une autre prefecture => 🔒 Déconnexion bloquée
+			</p>
         </div>
 
     </div>
 </div>
-
-
+	
 
 <!-- SECTION 4 -->
 <div class="section">
     <div class="accordion-title">🧱 4) Applications: Accès en écriture</div>
     <div class="accordion-content">
 
-        <h4>Objets:Gestion des droits (Rôles + Préfectures).</h4>
+        <h4>Objets: Contrôl d'accès en écriture - contrôl de saisie sur le champs "Prefecture"</h4>
 
         <div class="task">
             <input type="checkbox" id="t41">
-            <label for="t41">4.1 — ecritureB:backend/ecritureBD_insertionSQL.php</label>
-            <div class="script">
-				<pre><code class="language-php">
-						// ...
+            <label for="t41">4.1  ecritureBD.php: Contrôle de saisie sur le champs "Prefecture": Solution javaScript</label>
+		    <div class="script">
+				<pre><code class="language-JavaScript">
+						// 1️⃣ ecritureBD.php
 						
-
+						&lt;select
+							name="prefecture"
+							id="prefecture"
+							data-role="&lt?php echo $_SESSION['user_role']; ?>"
+							data-pref="&lt?php echo $_SESSION['prefecture']; ?>"
+							onChange="control(this); changement(this);">
+							
+						// 2️⃣  ecritureBD.js
+						
+						function control(select) {
+							let role = select.dataset.role;
+							let prefAutorisee = select.dataset.pref;
+							if (role !== "admin") {
+							    if (select.value !== prefAutorisee) {
+							       alert("La préfecture saisie est différente de votre centre d'affectation !");
+							       select.value = prefAutorisee;
+							    }
+							}
+						}
 				</code></pre>
 			</div>
 		</div>
